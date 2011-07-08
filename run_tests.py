@@ -4,7 +4,7 @@ from django.conf import settings
 from django.core.management import call_command
 
 # put the app name here
-app_to_test = 'app_to_test'
+app_to_test = 'staticpages'
 
 def main():
     # Dynamically configure the Django settings with the minimum necessary to
@@ -16,7 +16,7 @@ def main():
             'django.contrib.admin',
             'django.contrib.sessions',
             app_to_test,
-            '%s.test' % app_to_test,
+            '%s.tests' % app_to_test,
         ),
         # Django replaces this, but it still wants it. *shrugs*
         DATABASES = {

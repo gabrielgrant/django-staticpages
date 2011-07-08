@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
-from django.utils import unittest
+import os
+
+from django.test import TestCase
 from django.test.client import Client
 from django.conf import settings
 
-class URLTest(unittest.TestCase):
+class URLTest(TestCase):
     urls = 'staticpages.tests.urls'
     def setUp(self):
         self.c = Client()
