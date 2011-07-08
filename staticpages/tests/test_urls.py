@@ -18,7 +18,7 @@ class URLTest(TestCase):
         del self.c
 
     def test_basic_functionality(self):
-        response = self.c.get('/about')
+        response = self.c.get('/about/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue('about' in response.content)
 
