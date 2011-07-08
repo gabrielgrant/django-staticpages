@@ -1,11 +1,12 @@
 For when you don't need no stinkin' CMS
 
-Makes things ever-so-slightly easier.
+Makes things ever-so-slightly easier when you just want to serve a bunch of pages
+that are just rendered templates (with no special views or context)
 
 Routing autogeneration
 ----------------------
 
-define STATICPAGES_TEMPLATE_DIR in your settings.py
+define STATICPAGES_TEMPLATES in your settings.py
 
 STATICPAGES_TEMPLATES = [
     ('homesite', 'path/to/homesite/templates')
@@ -26,6 +27,9 @@ $PROJECT_ROOT/templates/homesite/
 
  sectionname_path_to_file
 
+
+TODO
+====
 
 Menu activation
 ---------------
