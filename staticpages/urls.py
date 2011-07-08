@@ -9,7 +9,7 @@ rel_linksdir = os.path.join('staticpages', 'links')
 abs_links_dir = os.path.join(os.path.dirname(__file__), 'templates', rel_linksdir)
 
 def get_urls(sections=None):
-    STATICPAGES_TEMPLATES = getattr(settings, 'STATICPAGES_TEMPLATES')
+    STATICPAGES_TEMPLATES = getattr(settings, 'STATICPAGES_TEMPLATES', [])
     if sections is not None and isinstance(sections, basestring):
         sections = [sections]
     if sections is None:
