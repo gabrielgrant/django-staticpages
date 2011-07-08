@@ -5,6 +5,7 @@ import os
 from django.test import TestCase
 from django.test.client import Client
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 class URLTest(TestCase):
     urls = 'staticpages.tests.urls'
@@ -26,6 +27,12 @@ class URLTest(TestCase):
         response = self.c.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertTrue('index' in response.content)
+    
+    def test_index_name(self):
+        self.assertEqual(reverse('homesite_index'), '/')
+    
+    def test_name(self):
+        self.assertEqual(reverse('homesite_about'), '/about/')
 
 def main():
     unittest.main()

@@ -37,7 +37,11 @@ def get_urls(sections=None):
                         url_re = r'^%s/$' % urlpath
                     template_name = os.path.join(rel_linksdir, name, filepath)
                     view = TemplateView.as_view(template_name=template_name)
-                    urlpattern = url_re, view
+                    url_name = '_'.join([name, urlpath.replace('/', '_')])
+                    if url_name.endswith('_'):
+                        url_name = url_name + 'index'
+                    print url_name
+                    urlpattern = url(url_re, view, name=url_name)
                     urlpatterns.append(urlpattern)
     return patterns('', *urlpatterns)
 
