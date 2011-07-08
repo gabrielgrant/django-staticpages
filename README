@@ -1,0 +1,41 @@
+For when you don't need no stinkin' CMS
+
+Makes things ever-so-slightly easier.
+
+Routing autogeneration
+----------------------
+
+define STATICPAGES_TEMPLATE_DIR in your settings.py
+
+STATICPAGES_TEMPLATES = [
+    ('homesite', 'path/to/homesite/templates')
+]
+
+make a directory-and-page hierarchy there, and the files will be automatically served with properly-named urls
+
+url naming:
+
+$PROJECT_ROOT/templates/homesite/
+  - index.html
+  - pricing.html
+  - about/
+    - index.html
+    - team.html
+    - news.html
+
+
+ sectionname_path_to_file
+
+
+Menu activation
+---------------
+
+
+http://110j.wordpress.com/2009/01/25/django-template-tag-for-active-class/
+
+
+
+Sitemaps
+--------
+
+http://minimoesfuerzo.org/2011/02/12/sitemaps-django-static-pages/
