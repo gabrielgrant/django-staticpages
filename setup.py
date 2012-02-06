@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='django-staticpages',
-    version='0.1.0',
+    version='0.2.0',
     packages=['staticpages', 'staticpages.tests'],
     include_package_data=True,
     author='Gabriel Grant',
