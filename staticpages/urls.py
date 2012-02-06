@@ -1,48 +1,21 @@
 import os
-import shutil
 
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, url
 from django.conf import settings
 from django.views.generic import TemplateView
 
-rel_linksdir = os.path.join('staticpages', 'links')
-abs_links_dir = os.path.join(os.path.dirname(__file__), 'templates', rel_linksdir)
+from .views import StaticpagesView
 
-def get_urls(sections=None):
-    STATICPAGES_TEMPLATES = getattr(settings, 'STATICPAGES_TEMPLATES', [])
-    if sections is not None and isinstance(sections, basestring):
-        sections = [sections]
-    if sections is None:
-        sections = STATICPAGES_TEMPLATES
-    else:
-        sections = [section for section in STATICPAGES_TEMPLATES if section[0] in sections]
-    urlpatterns = []
-    if os.path.exists(abs_links_dir):
-        shutil.rmtree(abs_links_dir)
-    os.makedirs(abs_links_dir)
-    for name, path in sections:
-        os.symlink(path, os.path.join(abs_links_dir, name))
-        for dirpath, dirnames, filenames in os.walk(path):
-            dirpath_stripped = dirpath.strip('/') + '/'
-            path_stripped = path.strip('/')
-            reldir = dirpath_stripped[len(path_stripped):]
-            for f in filenames:
-                if f.endswith('.html'):
-                    filepath = os.path.join(reldir.lstrip('/'), f)
-                    urlpath = os.path.splitext(filepath)[0]
-                    if f == 'index.html':
-                        urlpath = urlpath[:-len('index')]
-                        url_re = r'^%s$' % urlpath
-                    else:
-                        url_re = r'^%s/$' % urlpath
-                    template_name = os.path.join(rel_linksdir, name, filepath)
-                    view = TemplateView.as_view(template_name=template_name)
-                    url_name = '_'.join([name, urlpath.replace('/', '_')])
-                    if url_name.endswith('_'):
-                        url_name = url_name + 'index'
-                    print url_name
-                    urlpattern = url(url_re, view, name=url_name)
-                    urlpatterns.append(urlpattern)
-    return patterns('', *urlpatterns)
+def make_pattern(name, base_url, d):
+    parts = [base_url.strip(os.path.sep), '(.*?)/?$']
+    re = '^' + '/'.join(p for p in parts if p)
+    return url(re,
+        StaticpagesView.as_view(base_directory=d), name=name)
 
-urlpatterns = get_urls()    
+STATICPAGES_TEMPLATES = getattr(settings, 'STATICPAGES_TEMPLATES', [])
+# reorder to not eclipse the longer, more specific, regexes
+STATICPAGES_TEMPLATES.sort(key=lambda x: (-len(x[1].split('/')), -len(x[1])))
+
+urlpatterns = patterns('',
+    *[make_pattern(name, base_url, base_dir) for name, base_url, base_dir in STATICPAGES_TEMPLATES]
+)

@@ -6,15 +6,20 @@ that are just rendered templates (with no special views or context)
 Routing autogeneration
 ----------------------
 
-define STATICPAGES_TEMPLATES in your settings.py
+define STATICPAGES_TEMPLATES in your settings.py as a series of
+(section_name, base_url, base_template_path) three-tuples:
 
 STATICPAGES_TEMPLATES = [
-    ('homesite', 'path/to/homesite/templates')
+    ('homesite', '', 'homesite'),
+    ('subsite', 'url/of/subsite', 'staticpages/subsite'),
 ]
 
 make a directory-and-page hierarchy there, and the files will be automatically served with properly-named urls
 
-url naming:
+URL patterns are named by the site section name, and have a parameter for
+the path: reverse('sectionname', args=('path/to/file'))
+
+For example:
 
 $PROJECT_ROOT/templates/homesite/
   - index.html
@@ -24,8 +29,7 @@ $PROJECT_ROOT/templates/homesite/
     - team.html
     - news.html
 
-
- sectionname_path_to_file
+reverse('homesite', args=('about/team') -> '/about/team'
 
 
 TODO
