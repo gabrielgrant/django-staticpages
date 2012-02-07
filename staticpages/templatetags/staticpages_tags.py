@@ -7,7 +7,6 @@ def active(request, pattern, regex=False):
     import re
     if not regex:
         pattern = "^%s$" % pattern
-    print pattern, request.path
     if re.search(pattern, request.path):
         return 'active'
     return ''
