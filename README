@@ -14,10 +14,11 @@ STATICPAGES_TEMPLATES = [
     ('subsite', 'url/of/subsite', 'staticpages/subsite'),
 ]
 
-make a directory-and-page hierarchy there, and the files will be automatically served with properly-named urls
+make a directory-and-page hierarchy within the given template directory,
+and the files will be automatically served with properly-named urls
 
 URL patterns are named by the site section name, and have a parameter for
-the path: reverse('sectionname', args=('path/to/file'))
+the path: reverse('sectionname', args=('path/to/file/'))
 
 For example:
 
@@ -29,7 +30,7 @@ $PROJECT_ROOT/templates/homesite/
     - team.html
     - news.html
 
-reverse('homesite', args=('about/team') -> '/about/team'
+reverse('homesite', args=('about/team/') -> '/about/team/'
 
 
 TODO
