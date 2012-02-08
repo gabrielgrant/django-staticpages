@@ -7,7 +7,16 @@ from django.views.generic import TemplateView
 from .views import StaticpagesView
 
 def make_pattern(name, base_url, d):
-    parts = [base_url.strip(os.path.sep), '(.*?)/?$']
+    """ create url pattern for the given name and base url
+
+        patterns should match the base url plus zero or more non-
+        matching, non-greedy, groups of one of more characters,
+        plus a trailing slash:
+
+        '^{{BASE_URL}}/((?:.+?/)*)$
+    """
+    #parts = [base_url.strip('/'), '(.*?)/?$']
+    parts = [base_url.strip('/'), '((?:.+?/)*)$']
     re = '^' + '/'.join(p for p in parts if p)
     return url(re,
         StaticpagesView.as_view(base_directory=d), name=name)
